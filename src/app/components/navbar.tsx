@@ -232,7 +232,7 @@ export default function NavigationMenuDemo() {
     <div className="bg-primary flex flex-col ">
       <div className="p-4 flex justify-between gap-2">
         <div className="text-foreground cursor-pointer">
-          <Link href={"@/page.tsx"}></Link>i Space-д тавтай морилно уу
+          <Link href={"/"}></Link>i Space-д тавтай морилно уу
         </div>
         <div className="w-[70%] flex justify-center ">
           <SearchBar />
@@ -255,7 +255,10 @@ export default function NavigationMenuDemo() {
       <NavigationMenu className="p-2">
         <NavigationMenuList className="flex-wrap">
           {categories.map((category) => (
-            <NavigationMenuItem key={category}>
+            <NavigationMenuItem
+              onClick={() => handleClick(category)}
+              key={category}
+            >
               <NavigationMenuTrigger>{category}</NavigationMenuTrigger>
               <ItemContent category={category}></ItemContent>
             </NavigationMenuItem>
