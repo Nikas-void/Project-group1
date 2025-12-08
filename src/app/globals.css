@@ -41,23 +41,31 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --animate-scroll: scroll var(--animation-duration, 40s)
+    var(--animation-direction, forwards) linear infinite;
+
+  @keyframes scroll {
+    to {
+      transform: translate(calc(-50% - 0.5rem));
+    }
+  }
 }
 
 :root {
   --radius: 0.625rem;
   --background: oklch(0.9848 0.0054 95.1);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
+  --foreground: oklch(92.8% 0.006 264.531);
+  --card: oklch(0.145 0 0);
   --card-foreground: oklch(0.145 0 0);
-  --popover: rgb(57, 57, 75);
-  --popover-foreground: oklch(0.7061 0.1071 176.23);
-  --primary: rgb(57, 57, 75);
+  --popover: oklch(51.1% 0.096 186.391);
+  --popover-foreground: oklch(0.4541 0.0304 228.62);
+  --primary: oklch(43.7% 0.078 188.216);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.7064 0.0268 229.31);
+  --secondary-foreground: oklch(0.9504 0.0042 236.5);
   --muted: oklch(0.9613 0.0211 56.13);
   --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
+  --accent: oklch(70.4% 0.04 256.788);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
@@ -118,5 +126,31 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+.snowflake {
+  position: absolute;
+  top: -10px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.9;
+  filter: blur(1px);
+
+  animation-name: snowFallDrift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* Falling + drifting */
+@keyframes snowFallDrift {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(50vh) translateX(var(--drift));
+  }
+  100% {
+    transform: translateY(100vh) translateX(calc(var(--drift) * 2));
   }
 }
