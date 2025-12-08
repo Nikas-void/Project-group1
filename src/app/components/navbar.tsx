@@ -165,7 +165,6 @@
 "use client";
 
 import * as React from "react";
-import Link from "next/link";
 import { CATEGORIES_SLUGS } from "@/constants";
 import {
   IconBrandFacebook,
@@ -181,7 +180,6 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
@@ -203,13 +201,16 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import SearchBar from "@/app/components/searchbar";
-
+import { useRouter } from "next/router";
+import Link from "next/link";
 export const Products = () => {
   return;
 };
 
 export default function NavigationMenuDemo() {
   const [categories, setCategories] = React.useState<string[] | null>(null);
+  const router = useRouter();
+
   React.useEffect(() => {
     const getProduct = async () => {
       const response = await fetch(
@@ -223,8 +224,13 @@ export default function NavigationMenuDemo() {
     };
     getProduct();
   }, []);
-  console.log(categories);
+
   if (!categories) return null;
+
+  const handleClick = (category: string) => {
+    router.push(`/products/?category=${category}`);
+  };
+
   return (
     <div className="bg-primary flex flex-col ">
       <div className="p-4 flex justify-between gap-2">
