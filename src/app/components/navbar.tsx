@@ -201,11 +201,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import SearchBar from "@/app/components/searchbar";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-export const Products = () => {
-  return;
-};
 
 export default function NavigationMenuDemo() {
   const [categories, setCategories] = React.useState<string[] | null>(null);

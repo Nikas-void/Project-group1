@@ -17,7 +17,7 @@ export default function SearchBar() {
     <form onSubmit={handleSearch} className=" w-full ">
       <input
         type="text"
-        className=" bg-popover p-3 border w-full rounded-xl shadow"
+        className=" bg-popover p-3 border border-accent w-full rounded-xl shadow"
         placeholder="Search products..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
