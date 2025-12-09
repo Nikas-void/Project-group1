@@ -53,7 +53,7 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(0.9848 0.0054 95.1);
+  --background: oklch(100% 0.00011 271.152);
   --foreground: oklch(92.8% 0.006 264.531);
   --card: oklch(0.145 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -132,10 +132,11 @@
 .snowflake {
   position: absolute;
   top: -10px;
-  background: white;
+  background: whitesmoke;
   border-radius: 50%;
   opacity: 0.9;
-  filter: blur(1px);
+  filter: blur(0.5px);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
 
   animation-name: snowFallDrift;
   animation-timing-function: linear;
