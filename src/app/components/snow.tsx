@@ -22,11 +22,11 @@ export default function Snow() {
   }, []);
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden">
+    <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden ">
       {flakes.map((flake) => (
         <div
           key={flake.id}
-          className="snowflake"
+          className="snowflake "
           style={
             {
               left: flake.left + "%",

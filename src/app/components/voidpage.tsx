@@ -1,11 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
-import { Card } from "@/components/ui/card";
-import { Tilt } from "@/components/ui/tilt";
-import { Button } from "@/components/ui/button";
+import React, { useEffect, useState } from "react";
 
-const useCountdown = (targetDate) => {
+const useCountdown = (targetDate: any) => {
   const [timeRemaining, setTimeRemaining] = useState(
     targetDate - new Date().getTime()
   );
@@ -18,7 +15,7 @@ const useCountdown = (targetDate) => {
     return () => clearInterval(interval);
   }, [targetDate]);
 
-  const getTimerData = (milliseconds) => {
+  const getTimerData = (milliseconds: any) => {
     if (milliseconds <= 0)
       return { days: 0, hours: 0, minutes: 0, seconds: 0, completed: true };
 
@@ -41,7 +38,7 @@ const CountdownDisplay = () => {
   const { days, hours, minutes, seconds, completed } =
     useCountdown(newYearTime);
 
-  const formatUnit = (value) => String(value).padStart(2, "0");
+  const formatUnit = (value: any) => String(value).padStart(2, "0");
 
   if (completed) {
     return (
@@ -81,9 +78,54 @@ const CountdownDisplay = () => {
   );
 };
 
+const CountdownDisplay1 = () => {
+  const newYearTime = new Date("December 15, 2025 00:00:00").getTime();
+  const { days, hours, minutes, seconds, completed } =
+    useCountdown(newYearTime);
+
+  const formatUnit = (value: any) => String(value).padStart(2, "0");
+
+  if (completed) {
+    return (
+      <span className="text-4xl font-extrabold text-accent animate-pulse transition-all duration-1000">
+        Sorry Sale's Ended
+      </span>
+    );
+  }
+
+  const countdownUnits = [
+    { value: days, label: "өдөр" },
+    { value: hours, label: "цаг" },
+    { value: minutes, label: "Mинут" },
+    { value: seconds, label: "Cекунд" },
+  ];
+
+  return (
+    <div className="flex">
+      {countdownUnits.map((unit, index) => (
+        <React.Fragment key={unit.label}>
+          <div className="flex flex-col items-center p-2 sm:p-4  rounded-lg min-w-[65px] sm:min-w-20 shadow-inner transform transition-all hover:scale-105 duration-300">
+            <span className="text-3xl sm:text-4xl font-extrabold text-chart-1 tabular-nums tracking-widest">
+              {formatUnit(unit.value)}
+            </span>
+            <span className="text-xs sm:text-sm text-card uppercase mt-1 tracking-wider">
+              {unit.label}
+            </span>
+          </div>
+          {index < countdownUnits.length - 1 && (
+            <div className="flex items-center text-3xl sm:text-4xl font-light text-card select-none">
+              :
+            </div>
+          )}
+        </React.Fragment>
+      ))}
+    </div>
+  );
+};
+
 export default function App() {
   return (
-    <div className="min-h-screen bg-gray-100 text-white font-sans p-4 sm:p-8">
+    <div className="min-h-screen bg-background text-white font-sans p-4 sm:p-8">
       <div className=" mx-auto">
         <div className="flex flex-col md:flex-row  gap-8 p-6 sm:p-10 bg-primary rounded-2xl shadow-2xl  ">
           <div className="flex flex-col items-center md:items-start  space-y-6 shrink-0 w-full md:w-auto">
@@ -128,6 +170,14 @@ export default function App() {
               />
             </div>
           </div>
+        </div>
+      </div>
+      <div className="text-chart-1 flex flex-col mt-10  justify-center items-center">
+        <div className="text-9xl animate-bounce cursor-pointer">
+          Flash Sales
+        </div>
+        <div className="cursor-pointer">
+          <CountdownDisplay1 />
         </div>
       </div>
     </div>

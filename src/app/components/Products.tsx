@@ -28,7 +28,7 @@ const Products = () => {
   }, [category]);
 
   return (
-    <div className="container mt-6">
+    <div className="container  max-w-full flex justify-around mt-6">
       {loading ? (
         <div className="h-screen w-full flex justify-center items-center">
           <Loader color="black" className="spin" />
