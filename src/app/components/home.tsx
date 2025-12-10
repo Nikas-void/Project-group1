@@ -1,6 +1,5 @@
 "use client";
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -12,27 +11,47 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-export default function home() {
-  const [products, setProducts] = useState([]);
+import { useCart } from "@/app/components/cardContext";
+
+interface Product {
+  id: number;
+  title: string;
+  brand: string;
+  category: string;
+  price: number;
+  rating: number;
+  images: string[];
+  thumbnail: string;
+}
+
+export default function Home() {
+  const [products, setProducts] = useState<Product[]>([]);
+
+  const { addToCart } = useCart();
+
   useEffect(() => {
     const getProduct = async () => {
       const response = await fetch(
         `https://dummyjson.com/products/category/smartphones`
       );
       const result = await response.json();
-      console.log(result);
-      setProducts(result.products);
+      setProducts(result.products as Product[]);
     };
     getProduct();
   }, []);
-  console.log(products);
+
+  const handleAddToCart = (product: Product) => {
+    addToCart(product);
+    console.log(`Product ${product.title} added to cart!`);
+  };
+
   return (
-    <div className=" flex justify-between">
+    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 pb-[20%] md:grid-cols-3 lg:grid-cols-4">
       {products.slice(0, 4).map((product) => (
-        <div key={product.id} className=" w-fit mx-10">
-          <div className="w-full">
-            <div className="border rounded-lg shadow hover:shadow-lg transition">
-              <Carousel className="w-full  max-w-xs ">
+        <div key={product.id} className="w-full flex justify-center sm:px-2">
+          <div className="">
+            <div className="border  flex-wrap  rounded-lg shadow hover:shadow-lg transition">
+              <Carousel className="w-full max-w-xs ">
                 <CarouselContent>
                   {product.images.map((image) => (
                     <CarouselItem key={image}>
@@ -61,14 +80,25 @@ export default function home() {
                 </div>
                 <p className="mt-2 text-sm text-card">⭐ {product.rating}</p>
 
-                <Link href={`products/${product.id}`}>
-                  <Button className="mt-4 w-full bg-primary text-muted py-2 rounded-lg hover:bg-popover transition">
-                    View Product
+                <Button
+                  onClick={() => handleAddToCart(product)}
+                  className="mt-4 w-full bg-primary text-muted py-2 rounded-lg hover:bg-popover transition"
+                >
+                  Add to Cart
+                </Button>
+
+                <Link href={`products/${product.id}`} className="block">
+                  <Button
+                    variant="outline"
+                    className="mt-2 w-full border-primary text-primary hover:bg-accent/10 py-2 rounded-lg transition"
+                  >
+                    View Details
                   </Button>
                 </Link>
               </div>
             </div>
           </div>
+          <div></div>
         </div>
       ))}
     </div>

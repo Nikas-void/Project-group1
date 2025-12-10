@@ -1,13 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import NavigationMenuDemo from "./components/navbar";
 import Snow from "./components/snow";
 import Footer from "./components/footer";
+import { CartProvider } from "./components/cardContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+});
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin", "cyrillic"],
 });
 
 const geistMono = Geist_Mono({
@@ -27,13 +32,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <NavigationMenuDemo />
-        <Snow />
-        {children}
-        <Footer />
+      <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
+        <CartProvider>
+          <NavigationMenuDemo />
+          <Snow />
+          {children}
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   );
