@@ -7,11 +7,7 @@ const Page = async ({
   searchParams: Promise<{ category: string }>;
 }) => {
   const query = await searchParams;
-  return (
-    <Suspense fallback={<div></div>}>
-      <Products category={query.category} />;
-    </Suspense>
-  );
+  return <Products category={query.category} />;
 };
 
 export default Page;
