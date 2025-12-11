@@ -1,6 +1,5 @@
 "use client";
-import { use } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import {
   Carousel,
   CarouselContent,
@@ -8,16 +7,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { IconPlus } from "@tabler/icons-react";
-import { IconStar } from "@tabler/icons-react";
-import { Car } from "lucide-react";
-import { div } from "motion/react-client";
+import Image from "next/image";
+import { use, useEffect, useState } from "react";
 
 const ProductDetail = ({ params }: { params: Promise<{ id: string }> }) => {
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState<any>(null);
   const { id } = use(params);
   useEffect(() => {
     const fetchProduct = async () => {
@@ -27,15 +22,16 @@ const ProductDetail = ({ params }: { params: Promise<{ id: string }> }) => {
     };
     fetchProduct();
   }, []);
-  console.log(product);
+
   if (!product) return <div>...loading</div>;
+
   return (
     <div className="h-screen">
       <div className="flex mt-10 justify-around px-20 ">
         <div className="border-2 rounded-2xl shadow-2xl ">
           <Carousel className="w-full max-w-xs ">
             <CarouselContent>
-              {product.images.map((imageSrc) => (
+              {product.images.map((imageSrc: any) => (
                 <CarouselItem key={imageSrc}>
                   <Image
                     src={imageSrc}

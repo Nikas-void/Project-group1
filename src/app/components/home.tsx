@@ -28,13 +28,13 @@ export default function home() {
   console.log(products);
   return (
     <div className=" flex justify-between">
-      {products.slice(0, 4).map((product) => (
+      {products.slice(0, 4).map((product: any) => (
         <div key={product.id} className=" w-fit mx-10">
           <div className="w-full">
             <div className="border rounded-lg shadow hover:shadow-lg transition">
               <Carousel className="w-full  max-w-xs ">
                 <CarouselContent>
-                  {product.images.map((image) => (
+                  {product.images.map((image: string) => (
                     <CarouselItem key={image}>
                       <Image
                         src={image}

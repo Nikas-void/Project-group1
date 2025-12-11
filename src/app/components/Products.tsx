@@ -2,14 +2,9 @@
 
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
-import { useSearchParams } from "next/navigation";
 import { Loader } from "lucide-react";
 
-const Products = () => {
-  const searchParams = useSearchParams();
-
-  const category = searchParams.get("category");
-
+const Products: React.FC<any> = ({ category }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 

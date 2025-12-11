@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-const Products = ({ product }) => {
+
+const Products: React.FC<any> = ({ product }) => {
   const router = useRouter();
   return (
     <div className="w-full">
