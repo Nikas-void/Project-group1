@@ -5,8 +5,8 @@ import Link from "next/link";
 
 function footer() {
   return (
-    <div className="bg-popover flex flex-wrap flex-col justify-around py-10 px-15 gap-2">
-      <div className=" w-full flex justify-around gap-5">
+    <div className="bg-popover  py-10 px-15">
+      <div className=" w-full flex flex-col md:flex md:flex-row justify-around gap-10">
         <div className="flex flex-col gap-2">
           <div className="text-2xl">Developers</div>
           <span className="flex items-center gap-2">

@@ -56,7 +56,7 @@ const CountdownDisplay = () => {
   ];
 
   return (
-    <div className="flex justify-center space-x-2 sm:space-x-4 p-4 rounded-xl shadow-2xl bg-popover w-full max-w-lg mx-auto">
+    <div className="flex flex-col sm:flex-row justify-center space-x-2 sm:space-x-4 p-4 rounded-xl shadow-2xl bg-popover w-full max-w-lg mx-auto">
       {countdownUnits.map((unit, index) => (
         <React.Fragment key={unit.label}>
           <div className="flex flex-col items-center p-2 sm:p-4 bg-primary rounded-lg min-w-[65px] sm:min-w-20 shadow-inner transform transition-all hover:scale-105 duration-300">
@@ -101,7 +101,7 @@ const CountdownDisplay1 = () => {
   ];
 
   return (
-    <div className="flex">
+    <div className="flex flex-col justify-center items-center sm:flex-row">
       {countdownUnits.map((unit, index) => (
         <React.Fragment key={unit.label}>
           <div className="flex flex-col items-center p-2 sm:p-4  rounded-lg min-w-[65px] sm:min-w-20 shadow-inner transform transition-all hover:scale-105 duration-300">
@@ -130,39 +130,39 @@ export default function App() {
         <div className="flex flex-col md:flex-row  gap-8 p-6 sm:p-10 bg-primary rounded-2xl shadow-2xl  ">
           <div className="flex flex-col items-center md:items-start  space-y-6 shrink-0 w-full md:w-auto">
             <div className="w-full h-auto max-w-xs sm:max-w-sm ">
-              <div className="bg-popover rounded-xl p-8  shadow-inner">
-                <h1 className="text-6xl sm:text-8xl font-black text-muted text-center tracking-widest leading-none drop-shadow-lg">
+              <div className="bg-popover overflow-hidden text-center rounded-xl p-8  shadow-inner">
+                <h1 className="text-xl sm:text-4xl md:text-6xl font-black text-muted text-center tracking-widest leading-none drop-shadow-lg">
                   Шинэ
                 </h1>
-                <h1 className="text-8xl sm:text-8xl font-black text-yellow-100 text-center tracking-widest leading-none drop-shadow-xl py-2">
+                <h1 className="text-xl sm:text-4xl md:text-6xl font-black text-yellow-100 text-center tracking-widest leading-none drop-shadow-xl py-2">
                   2026
                 </h1>
-                <h1 className="text-6xl sm:text-8xl font-black text-muted text-center tracking-widest leading-none drop-shadow-lg">
+                <h1 className="text-xl sm:text-4xl md:text-6xl font-black text-muted text-center tracking-widest leading-none drop-shadow-lg">
                   жил
                 </h1>
               </div>
             </div>
 
-            <div className="w-full max-w-lg mt-6 cursor-pointer">
+            <div className="w-full max-w-lg  mt-6 cursor-pointer">
               <CountdownDisplay />
             </div>
           </div>
-          <div className=" overflow-hidden  w-400">
-            <div className="rounded-md flex flex-col antialiased  dark:bg-black dark:bg-grid-white/[0.05] items-center justify-center relative ">
+          <div className=" overflow-hidden">
+            <div className="">
               <InfiniteMovingCards
                 images={testimonials}
                 direction="left"
                 speed="slow"
               />
             </div>
-            <div className=" rounded-md flex flex-col antialiased  dark:bg-black dark:bg-grid-white/[0.05] items-center justify-center relative overflow-hidden">
+            <div className=" ">
               <InfiniteMovingCards
                 images={testimonials}
                 direction="right"
                 speed="slow"
               />
             </div>
-            <div className=" rounded-md flex flex-col antialiased  dark:bg-black dark:bg-grid-white/[0.05] items-center justify-center relative overflow-hidden">
+            <div className=" ">
               <InfiniteMovingCards
                 images={testimonials}
                 direction="left"
@@ -173,7 +173,7 @@ export default function App() {
         </div>
       </div>
       <div className="text-chart-1 flex flex-col mt-10  justify-center items-center">
-        <div className="text-9xl animate-bounce cursor-pointer">
+        <div className="text-xl md:text-9xl sm:text-5xl animate-bounce  cursor-pointer">
           Flash Sales
         </div>
         <div className="cursor-pointer">

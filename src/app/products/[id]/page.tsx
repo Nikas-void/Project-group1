@@ -7,80 +7,142 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { IconPlus } from "@tabler/icons-react";
 import Image from "next/image";
-import { use, useEffect, useState } from "react";
+import { IconPlus, IconStar } from "@tabler/icons-react";
+import { useProductDetail } from "@/hooks/useProducts";
+import { useCart } from "@/app/components/cardContext";
+import { use } from "react";
+
+export interface Product {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  discountPercentage: number;
+  brand: string;
+  rating: number;
+  stock: number;
+  images: string[];
+  thumbnail: string;
+}
 
 const ProductDetail = ({ params }: { params: Promise<{ id: string }> }) => {
-  const [product, setProduct] = useState<any>(null);
   const { id } = use(params);
-  useEffect(() => {
-    const fetchProduct = async () => {
-      const response = await fetch(`https://dummyjson.com/products/${id}`);
-      const data = await response.json();
-      setProduct(data);
-    };
-    fetchProduct();
-  }, []);
+  const { addToCart } = useCart();
+  const product = useProductDetail(id);
+  const handleAddToCart = () => {
+    if (product) {
+      addToCart(product);
+    }
+  };
 
-  if (!product) return <div>...loading</div>;
+  if (!product)
+    return (
+      <div className="flex items-center justify-center h-screen text-lg">
+        Loading...
+      </div>
+    );
+
+  const discountedPrice = (
+    product.price -
+    (product.price / 100) * product.discountPercentage
+  ).toFixed(2);
 
   return (
-    <div className="h-screen">
-      <div className="flex mt-10 justify-around px-20 ">
-        <div className="border-2 rounded-2xl shadow-2xl ">
-          <Carousel className="w-full max-w-xs ">
-            <CarouselContent>
-              {product.images.map((imageSrc: any) => (
-                <CarouselItem key={imageSrc}>
-                  <Image
-                    src={imageSrc}
-                    alt={product.title}
-                    width={400}
-                    height={400}
-                  ></Image>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </div>
-        <div>
-          <div className="border-b-2 border-black">
-            <span className="flex max-w-[500px] text-2xl items-center text-card">
-              {product.description}
-            </span>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-12 px-6">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+        {/* Image Carousel */}
+        <div className="flex items-center justify-center">
+          <div className="bg-white rounded-3xl shadow-xl p-8 w-full max-w-[500px]">
+            <Carousel>
+              <CarouselContent>
+                {product.images?.map((imageSrc) => (
+                  <CarouselItem key={imageSrc}>
+                    <div className="flex justify-center">
+                      <Image
+                        src={imageSrc}
+                        alt={product.title}
+                        width={400}
+                        height={400}
+                        className="object-contain"
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
           </div>
-          <div className="grid grid-cols-2 text-card">
-            <div className="flex flex-col gap-3">
-              <span className="flex text-3xl font-bold  w-full">
-                <span className="text-2xl font-light text-red-600 ">
-                  {product.discountPercentage}%off
+        </div>
+
+        {/* Product Details */}
+        <div className="flex flex-col justify-center space-y-6">
+          <div>
+            <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
+              {product.brand}
+            </p>
+            <h1 className="text-4xl font-bold text-gray-900 mt-2">
+              {product.title}
+            </h1>
+            <p className="text-gray-600 mt-4 text-lg leading-relaxed max-w-md">
+              {product.description}
+            </p>
+          </div>
+
+          {/* Price Section */}
+          <div className="bg-white rounded-2xl p-6 shadow-md space-y-3">
+            <div className="flex items-baseline gap-4">
+              <span className="text-4xl font-bold text-gray-900">
+                ${discountedPrice}
+              </span>
+              <span className="text-xl text-gray-400 line-through">
+                ${product.price}
+              </span>
+              <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                {product.discountPercentage}% OFF
+              </span>
+            </div>
+          </div>
+
+          {/* Product Info */}
+          <div className="bg-white rounded-2xl p-6 shadow-md grid grid-cols-2 gap-6">
+            <div>
+              <p className="text-gray-500 text-sm uppercase tracking-wide mb-2">
+                Rating
+              </p>
+              <div className="flex items-center gap-2">
+                <span className="text-2xl font-bold text-gray-900">
+                  {product.rating}
                 </span>
-                <p className="text-[15px] font-light mt-0 text-card">USD</p>
-                {(
-                  product.price -
-                  (product.price / 100) * product.discountPercentage
-                ).toFixed(2)}
-              </span>
-              <span className=" font-bold ">
-                orginal price: <del>${product.price}</del>
-              </span>
-              <div>
-                <Button className="w-50 text-2xl bg-popover hover:bg-primary">
-                  <IconPlus /> Plus
-                </Button>
+                <IconStar className="text-yellow-400" fill="currentColor" />
               </div>
             </div>
-            <div className="flex flex-col text-sl font-bold">
-              <span>Brand: {product.brand}</span>
-              <span>Rating: {product.rating}</span>
-              <span>In Stock: {product.stock}</span>
-              <span>{}</span>
-              <span>{}</span>
+            <div>
+              <p className="text-gray-500 text-sm uppercase tracking-wide mb-2">
+                Stock
+              </p>
+              <p
+                className={`text-2xl font-bold ${
+                  product.stock > 0 ? "text-green-600" : "text-red-600"
+                }`}
+              >
+                {product.stock > 0
+                  ? `${product.stock} Available`
+                  : "Out of Stock"}
+              </p>
             </div>
           </div>
+
+          {/* Add to Cart Button */}
+          <Button
+            onClick={handleAddToCart}
+            disabled={product.stock === 0}
+            className="w-full py-6 text-lg font-semibold bg-primary hover:bg-popover text-white rounded-xl transition-all duration-200 flex items-center justify-center gap-2"
+          >
+            <IconPlus size={24} />
+            Add to Cart
+          </Button>
         </div>
       </div>
     </div>
